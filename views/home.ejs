@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>hi</h1>
+  <h2 id="result"><%=message%></h2>
+  <input id="input" type="text">
+  <button id="button">Button</button>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    window.onload = () => {
+      const btn = document.getElementById("button");
+      const input = document.getElementById('input');
+      const text = input.value;
+
+      btn.addEventListener('click', async (e)=>{
+        const postResult = await axios.post('/first', {
+          data: text
+        })
+        console.log('결과', postResult);
+
+        const resultH2 = document.getElementById('result');
+        resultH2.innerHTML = postResult.data;
+        input.value = '';
+      })
+    }
+  </script>
+  <script src="test.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+</html>
