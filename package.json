@@ -1,0 +1,23 @@
+{
+  "name": "kayastudy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pm2": "pm2 start index.js --watch",
+    "log": "pm2 log",
+    "kill": "pm2 kill",
+    "flush": "pm2 flush"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "mongodb": "^4.1.4",
+    "pm2": "^5.1.2",
+    "pug": "^3.0.2"
+  }
+}
