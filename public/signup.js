@@ -19,7 +19,7 @@ window.onload = () => {
       const { status } = axiosStatus.data;
   
       if (status == "duplicated") {
-        alert("id가 중복")
+        alert("id가 중복");
       } else if (status == "success") {
         alert("회원가입 성공")
         location.reload();
@@ -35,7 +35,7 @@ window.onload = () => {
       }
 
       // console.log(error.response.data.status);
-    alert(error);
+      alert(alertMsg);
   }
 
   });

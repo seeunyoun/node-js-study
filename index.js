@@ -26,7 +26,7 @@ const _client = mongoClient.connect();
 
 async function getUserCollection() {
   const client = await _client;
-  return client.db("login").collection("_User");
+  return client.db("login").collection("User");
 }
 
 app.get("/", async (req, res) => {
@@ -36,7 +36,7 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/signup", (req, res) => {
-  console.log("회원가입페이지")
+  console.log("회원가입 페이지")
   res.render('signup', {
     
   });
@@ -77,6 +77,22 @@ app.post("/signup", async (req, res) => {
   res.status(200).send({"status" : "success"});
 });
 
+app.get("/login", (req, res) => {
+  console.log("로그인 페이지")
+  res.render('login', {
+    
+  });
+});
+
+app.post("/login", async (req, res) => {
+  const { idVal, pwVal } = req.body;
+  const collection = await getUserCollection();
+
+  const existedUser = await collection.findOne({ userId: idVal, password: pwVal });
+  if(existedUser) return res.status(200).send({ "status": "success" });
+  else return res.status(400).send({ "status": "fail" });
+
+});
 
 app.post("/first", (req, res) => {
   const { data } = req.body;
