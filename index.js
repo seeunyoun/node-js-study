@@ -35,11 +35,9 @@ app.get("/", async (req, res) => {
   });
 });
 
+// 회원가입
 app.get("/signup", (req, res) => {
-  console.log("회원가입 페이지")
-  res.render('signup', {
-    
-  });
+  res.render('signup', {});
 });
 
 app.post("/signup", async (req, res) => {
@@ -57,7 +55,7 @@ app.post("/signup", async (req, res) => {
 
   const collection = await getUserCollection();
 
-  //중복 검사
+  // 중복 검사
   const checkUnique = await(async() => {
     const foundUser = await collection.findOne({ userId: idVal });
 
@@ -67,21 +65,19 @@ app.post("/signup", async (req, res) => {
 
   if (!checkUnique) return res.status(400).send({ "status": "fail" });
 
-  //Save
+  // Save
   await collection.insertOne(createUserObject(idVal, pwVal, nameVal, emailVal));
 
-  //Read
+  // Read
   const userCollection = await collection.find({ userId: idVal }).toArray();
   console.log("USER COLLECTION : ", userCollection);
 
   res.status(200).send({"status" : "success"});
 });
 
+// 로그인
 app.get("/login", (req, res) => {
-  console.log("로그인 페이지")
-  res.render('login', {
-    
-  });
+  res.render('login', {});
 });
 
 app.post("/login", async (req, res) => {
@@ -91,6 +87,23 @@ app.post("/login", async (req, res) => {
   const existedUser = await collection.findOne({ userId: idVal, password: pwVal });
   if(existedUser) return res.status(200).send({ "status": "success" });
   else return res.status(400).send({ "status": "fail" });
+
+});
+
+// 회원정보 수정
+app.get("/update", (req, res) => {
+  res.render("update", {});
+});
+
+app.put("/update", async (req, res) => {
+  const { idVal, pwVal, nameVal, emailVal } = req.body;
+
+  const collection = await getUserCollection();
+
+  // Update
+  await collection.updateOne({ userId: idVal }, { $set: { password: pwVal, name: nameVal, email: emailVal } });
+
+  res.status(200).send({ "status": "success" });
 
 });
 
